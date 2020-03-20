@@ -72,6 +72,10 @@ public class DataConsumer implements Runnable {
                 msgList = consumer.poll(1000);
                 if (null != msgList && msgList.count() > 0) {
 //                    System.out.println(msgList.count());
+
+                    //清空表数据
+                    CopyDataToGp.deleteTable(tableName,conn);
+
                     for (ConsumerRecord<String, String> record : msgList) {
                         String recordValue = record.value();
                         JSONObject jsonObject = JSON.parseObject(recordValue) ;
